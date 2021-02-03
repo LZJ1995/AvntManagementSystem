@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--导入其他spring配置文件-->
+    <import resource="AppliCationContext_dao.xml"/>
+    <import resource="AppliCationContext_web.xml"/>
+    <import resource="AppliCationContext_service.xml"/>
+    <import resource="AppliCationContext_task.xml"/>
+
+</beans>

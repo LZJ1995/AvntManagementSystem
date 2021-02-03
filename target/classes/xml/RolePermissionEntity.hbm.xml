@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.gac.lzj.avnt.entities.RolePermissionEntity" table="role_permission" schema="avntmanagement">
+        <id name="rolePermissionId">
+            <column name="role_permission_Id" sql-type="int(11)"/>
+        </id>
+    </class>
+</hibernate-mapping>

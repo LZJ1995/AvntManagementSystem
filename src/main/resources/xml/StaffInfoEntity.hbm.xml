@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.gac.lzj.avnt.entities.StaffInfoEntity" table="staff_info" schema="avntmanagement">
+        <id name="staffId">
+            <column name="staff_Id" sql-type="int(11)"/>
+        </id>
+        <property name="staffName">
+            <column name="staff_Name" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffAccount">
+            <column name="staff_Account" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffPassword">
+            <column name="staff_Password" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffTelephone">
+            <column name="staff_Telephone" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffCompany">
+            <column name="staff_Company" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffEmail">
+            <column name="staff_Email" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="staffStatus">
+            <column name="staff_Status" sql-type="int(11)"/>
+        </property>
+        <property name="staffCreateTime">
+            <column name="staff_CreateTime" sql-type="datetime"/>
+        </property>
+        <property name="staffUpdateTime">
+            <column name="staff_UpdateTime" sql-type="datetime"/>
+        </property>
+        <property name="staffLastLoginTime">
+            <column name="staff_LastLoginTime" sql-type="datetime"/>
+        </property>
+    </class>
+</hibernate-mapping>

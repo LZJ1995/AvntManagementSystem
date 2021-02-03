@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.gac.lzj.avnt.entities.DeviceInfoEntity" table="device_info" schema="avntmanagement">
+        <id name="deviceId">
+            <column name="device_Id" sql-type="int(11)"/>
+        </id>
+        <property name="deviceName">
+            <column name="device_Name" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="deviceType">
+            <column name="device_Type" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="deviceVersionFormat">
+            <column name="device_Version_Format" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="deviceCreateTime">
+            <column name="device_CreateTime" sql-type="datetime"/>
+        </property>
+        <property name="deviceStatus">
+            <column name="device_Status" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="deviceModel">
+            <column name="device_Model" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="deviceMeid">
+            <column name="device_MEID" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="deviceImei">
+            <column name="device_IMEI" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="deviceMemory">
+            <column name="device_Memory" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="deviceAccountPassword">
+            <column name="device_AccountPassword" sql-type="varchar(64)" length="64" not-null="true"/>
+        </property>
+        <property name="devicePhone">
+            <column name="device_Phone" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

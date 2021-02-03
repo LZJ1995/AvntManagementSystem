@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--自动扫描包 -->
+    <context:component-scan base-package="org.gac.lzj.avnt.*"/>
+    <!--导入外部Properties外部资源-->
+    <context:property-placeholder location="classpath:/properties/db.properties"/>
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+        <property name="jdbcUrl" value="${jdbcUrl}"/>
+        <property name="driverClass" value="${driverClass}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialPoolSize" value="${initialPoolsize}"/>
+        <property name="maxPoolSize" value="${maxPoolsize}"/>
+    </bean>
+   <!-- 配置hibernate的sessionfactory管理器org.springframework.orm.hibernate4.LocalSessionFactoryBean-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocations" value="classpath:config/hibernate/hibernate.cfg.xml"/>
+        <property name="mappingLocations" value="classpath:xml/*.hbm.xml"/>
+    </bean>
+  <!--  配置声明式事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="*"  isolation="DEFAULT" propagation="REQUIRED"
+                       timeout="5"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+            <aop:pointcut id="pointcut" expression=" execution( * org.gac.lzj.avnt.dao.*.*(..))"/>
+            <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+</beans>
