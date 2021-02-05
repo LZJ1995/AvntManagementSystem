@@ -19,13 +19,11 @@ public class WelcomeController {
 
     @Autowired
     private StaffServiceImp staffService;
-    @Autowired
-    private HttpServletRequest request;
 
     @RequestMapping("/")
     public String welcomPage(Model model){
         model.addAttribute("title","欢迎登录AVNT管理系统");
-        return "carManagement";
+        return "homePage";
     }
 
     @RequestMapping("/loginPage")

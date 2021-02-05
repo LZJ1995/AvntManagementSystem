@@ -12,20 +12,20 @@
 								href="${pageContext.request.contextPath}/homePage.do"><i
 									class="glyphicon glyphicon-tags"></i> 首页</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/weekController/weekPage.do"><i
+								href="${pageContext.request.contextPath}/showDeviceManagement.do"><i
 									class="glyphicon glyphicon-tags"></i> 设备管理</a></li>
 							<li ><a
-								href="${pageContext.request.contextPath}/dailyController/historydaily/${sessionScope.emp.empId}.do"><i
+								href="${pageContext.request.contextPath}/showCarManagement.do"><i
 									class="glyphicon glyphicon-tags"></i> 车辆管理</a></li>
 							<li ><a
-								href="${pageContext.request.contextPath}/weekController/historyweekly/${sessionScope.emp.empId}.do"><i
+								href="${pageContext.request.contextPath}/showMaterielManagement.do"><i
 									class="glyphicon glyphicon-tags"></i> 物料管理</a></li>
 
 								<li ><a
-									href="${pageContext.request.contextPath}/empController/showallemployee.do"><i
+									href="${pageContext.request.contextPath}/showBugManagement.do"><i
 										class="glyphicon glyphicon-tags"></i> 禅道管理</a></li>
 							<li ><a
-									href="${pageContext.request.contextPath}/empController/showallemployee.do"><i
+									href="${pageContext.request.contextPath}/showNoticeManagement.do"><i
 									class="glyphicon glyphicon-tags"></i> 公告管理</a></li>
 										<li ><a
 									href="${pageContext.request.contextPath}/showNewInformation.do"><i

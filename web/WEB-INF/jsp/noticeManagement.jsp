@@ -15,11 +15,44 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-
+    <link rel="shortcut icon" href="http://www.weather.com.cn/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <c:import url="heardPage.jsp"></c:import>
-<c:import url="menuBar.jsp"></c:import>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <li class="list-group-item"><span><i
+                        class="glyphicon glyphicon-th-large"></i> AVNT管理系统  </span>
+                    <ul class="nav nav-pills nav-stacked" style="margin-top: 10px;">
+                        <li ><a
+                                href="${pageContext.request.contextPath}/homePage.do"><i
+                                class="glyphicon glyphicon-home"></i> 首页</a></li>
+                        <li><a
+                                href="${pageContext.request.contextPath}/showDeviceManagement.do"><i
+                                class="	glyphicon glyphicon-wrench"></i> 设备管理</a></li>
+                        <li ><a
+                                href="${pageContext.request.contextPath}/showCarManagement.do"><i
+                                class="glyphicon glyphicon-dashboard"></i> 车辆管理</a></li>
+                        <li ><a
+                                href="${pageContext.request.contextPath}/showMaterielManagement.do"><i
+                                class="glyphicon glyphicon-cog"></i> 物料管理</a></li>
+
+                        <li ><a
+                                href="${pageContext.request.contextPath}/showBugManagement.do"><i
+                                class="glyphicon glyphicon-globe"></i> 禅道管理</a></li>
+                        <li class="active" ><a
+                                href="${pageContext.request.contextPath}/showNoticeManagement.do"><i
+                                class="	glyphicon glyphicon-bullhorn"></i> 公告管理</a></li>
+                        <li ><a
+                                href="${pageContext.request.contextPath}/showNewInformation.do"><i
+                                class="glyphicon glyphicon-tags"></i> 新增信息</a></li>
+                    </ul></li>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -35,7 +68,7 @@
                             <input type="text" class="form-control" placeholder="请输入搜索关键字">
                         <span class="input-group-btn">
 						<button class="btn btn-default" type="button">
-							搜索！
+							搜索
 						</button>
 					</span>
                         </div><!-- /input-group -->

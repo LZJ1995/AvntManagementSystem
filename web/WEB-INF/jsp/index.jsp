@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery/bootstrap.min.js"></script>
+<link rel="shortcut icon" href="http://www.weather.com.cn/favicon.ico" type="image/x-icon" />
 <html>
   <head>
       <title>${title}</title>
