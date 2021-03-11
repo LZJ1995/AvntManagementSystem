@@ -5,21 +5,11 @@
 <hibernate-configuration>
     <!--数据库方言-->
     <session-factory>
-        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
         <property name="show_sql">true</property>
+        <property name="hibernate.connection.autocommit">true</property>
         <property name="format_sql">true</property>
+        <property name="hibernate.allow_update_outside_transaction">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-<!--
-        <mapping class="org.gac.lzj.avnt.entities.StaffInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.BorrowCarEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.BorrowDeviceEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.BorrowMaterielEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.CarInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.DeviceInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.MaterielInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.PermissionInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.RoleInfoEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.RolePermissionEntity"/>
-        <mapping class="org.gac.lzj.avnt.entities.StaffInfoEntity"/>-->
     </session-factory>
 </hibernate-configuration>

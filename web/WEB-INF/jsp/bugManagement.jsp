@@ -30,8 +30,8 @@
                                 href="${pageContext.request.contextPath}/homePage.do"><i
                                 class="glyphicon glyphicon-home"></i> 首页</a></li>
                         <li><a
-                                href="${pageContext.request.contextPath}/showDeviceManagement.do"><i
-                                class="glyphicon glyphicon-wrench"></i> 设备管理</a></li>
+                                href="${pageContext.request.contextPath}/searchAll.do"><i
+                                class="glyphicon glyphicon-wrench"></i> 资源管理</a></li>
                         <li ><a
                                 href="${pageContext.request.contextPath}/showCarManagement.do"><i
                                 class="glyphicon glyphicon-dashboard"></i> 车辆管理</a></li>

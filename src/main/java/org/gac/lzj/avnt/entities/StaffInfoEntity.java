@@ -1,11 +1,15 @@
 package org.gac.lzj.avnt.entities;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
 
-@Entity
-@Table(name = "staff_info", schema = "avntmanagement", catalog = "")
-public class StaffInfoEntity {
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
+
+public class StaffInfoEntity  implements Serializable{
     private int staffId;
     private String staffName;
     private String staffAccount;
@@ -17,9 +21,8 @@ public class StaffInfoEntity {
     private Timestamp staffCreateTime;
     private Timestamp staffUpdateTime;
     private Timestamp staffLastLoginTime;
+    private Set<BorrowInfoEntity> borrowInfo= new HashSet();
 
-    @Id
-    @Column(name = "staff_Id", nullable = false)
     public int getStaffId() {
         return staffId;
     }
@@ -28,8 +31,6 @@ public class StaffInfoEntity {
         this.staffId = staffId;
     }
 
-    @Basic
-    @Column(name = "staff_Name", nullable = false, length = 128)
     public String getStaffName() {
         return staffName;
     }
@@ -38,8 +39,6 @@ public class StaffInfoEntity {
         this.staffName = staffName;
     }
 
-    @Basic
-    @Column(name = "staff_Account", nullable = false, length = 128)
     public String getStaffAccount() {
         return staffAccount;
     }
@@ -48,8 +47,6 @@ public class StaffInfoEntity {
         this.staffAccount = staffAccount;
     }
 
-    @Basic
-    @Column(name = "staff_Password", nullable = false, length = 128)
     public String getStaffPassword() {
         return staffPassword;
     }
@@ -58,8 +55,6 @@ public class StaffInfoEntity {
         this.staffPassword = staffPassword;
     }
 
-    @Basic
-    @Column(name = "staff_Telephone", nullable = false, length = 128)
     public String getStaffTelephone() {
         return staffTelephone;
     }
@@ -68,8 +63,6 @@ public class StaffInfoEntity {
         this.staffTelephone = staffTelephone;
     }
 
-    @Basic
-    @Column(name = "staff_Company", nullable = false, length = 128)
     public String getStaffCompany() {
         return staffCompany;
     }
@@ -78,8 +71,6 @@ public class StaffInfoEntity {
         this.staffCompany = staffCompany;
     }
 
-    @Basic
-    @Column(name = "staff_Email", nullable = false, length = 128)
     public String getStaffEmail() {
         return staffEmail;
     }
@@ -88,8 +79,6 @@ public class StaffInfoEntity {
         this.staffEmail = staffEmail;
     }
 
-    @Basic
-    @Column(name = "staff_Status", nullable = false)
     public int getStaffStatus() {
         return staffStatus;
     }
@@ -98,8 +87,6 @@ public class StaffInfoEntity {
         this.staffStatus = staffStatus;
     }
 
-    @Basic
-    @Column(name = "staff_CreateTime", nullable = false)
     public Timestamp getStaffCreateTime() {
         return staffCreateTime;
     }
@@ -108,8 +95,6 @@ public class StaffInfoEntity {
         this.staffCreateTime = staffCreateTime;
     }
 
-    @Basic
-    @Column(name = "staff_UpdateTime", nullable = false)
     public Timestamp getStaffUpdateTime() {
         return staffUpdateTime;
     }
@@ -118,8 +103,6 @@ public class StaffInfoEntity {
         this.staffUpdateTime = staffUpdateTime;
     }
 
-    @Basic
-    @Column(name = "staff_LastLoginTime", nullable = false)
     public Timestamp getStaffLastLoginTime() {
         return staffLastLoginTime;
     }
@@ -128,46 +111,11 @@ public class StaffInfoEntity {
         this.staffLastLoginTime = staffLastLoginTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        StaffInfoEntity that = (StaffInfoEntity) o;
-
-        if (staffId != that.staffId) return false;
-        if (staffStatus != that.staffStatus) return false;
-        if (staffName != null ? !staffName.equals(that.staffName) : that.staffName != null) return false;
-        if (staffAccount != null ? !staffAccount.equals(that.staffAccount) : that.staffAccount != null) return false;
-        if (staffPassword != null ? !staffPassword.equals(that.staffPassword) : that.staffPassword != null)
-            return false;
-        if (staffTelephone != null ? !staffTelephone.equals(that.staffTelephone) : that.staffTelephone != null)
-            return false;
-        if (staffCompany != null ? !staffCompany.equals(that.staffCompany) : that.staffCompany != null) return false;
-        if (staffEmail != null ? !staffEmail.equals(that.staffEmail) : that.staffEmail != null) return false;
-        if (staffCreateTime != null ? !staffCreateTime.equals(that.staffCreateTime) : that.staffCreateTime != null)
-            return false;
-        if (staffUpdateTime != null ? !staffUpdateTime.equals(that.staffUpdateTime) : that.staffUpdateTime != null)
-            return false;
-        if (staffLastLoginTime != null ? !staffLastLoginTime.equals(that.staffLastLoginTime) : that.staffLastLoginTime != null)
-            return false;
-
-        return true;
+    public Set<BorrowInfoEntity> getBorrowInfo() {
+        return borrowInfo;
     }
 
-    @Override
-    public int hashCode() {
-        int result = staffId;
-        result = 31 * result + (staffName != null ? staffName.hashCode() : 0);
-        result = 31 * result + (staffAccount != null ? staffAccount.hashCode() : 0);
-        result = 31 * result + (staffPassword != null ? staffPassword.hashCode() : 0);
-        result = 31 * result + (staffTelephone != null ? staffTelephone.hashCode() : 0);
-        result = 31 * result + (staffCompany != null ? staffCompany.hashCode() : 0);
-        result = 31 * result + (staffEmail != null ? staffEmail.hashCode() : 0);
-        result = 31 * result + staffStatus;
-        result = 31 * result + (staffCreateTime != null ? staffCreateTime.hashCode() : 0);
-        result = 31 * result + (staffUpdateTime != null ? staffUpdateTime.hashCode() : 0);
-        result = 31 * result + (staffLastLoginTime != null ? staffLastLoginTime.hashCode() : 0);
-        return result;
+    public void setBorrowInfo(Set<BorrowInfoEntity> borrowInfo) {
+        this.borrowInfo = borrowInfo;
     }
 }

@@ -38,5 +38,11 @@
         <property name="staffLastLoginTime">
             <column name="staff_LastLoginTime" sql-type="datetime"/>
         </property>
+        <set name="borrowInfo" table="borrow" inverse="true">
+            <key>
+                <column name="staff_id" />
+            </key>
+            <one-to-many class="org.gac.lzj.avnt.entities.BorrowInfoEntity" />
+        </set>
     </class>
 </hibernate-mapping>

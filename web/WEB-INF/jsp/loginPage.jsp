@@ -41,8 +41,8 @@
 			}
 			$.ajax({
 				async : true,
-				url : "${pageContext.request.contextPath}/login.do",
-				type : "POST",
+                url : "${pageContext.request.contextPath}/login.do",
+                type : "POST",
 				data : {
 					"staffAccount" : loginacct.val(),
 					"staffPassword" : userpswd.val(),
@@ -53,13 +53,18 @@
 				},
 				success : function(result) {
 					// 通过返回的响应结果跳转页面
-					if (result) {
+					if (result=="登录成功！") {
+					    alert(result)
 						window.location.href = "${pageContext.request.contextPath}/homePage.do";
-					} else {
+					} else if(result=="用户已登录！"){
 						alert(result);
-					}
+                        window.location.href = "${pageContext.request.contextPath}/homePage.do";
+					}else {
+                        alert(result);
+                    }
 				},
 				error : function() {
+                    alert(result);
 				}
 			});
 		}

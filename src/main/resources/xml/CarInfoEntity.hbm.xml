@@ -38,5 +38,9 @@
         <property name="carStatus">
             <column name="car_Status" sql-type="varchar(32)" length="32" not-null="true"/>
         </property>
+        <set name="borrowDetailInfoEntities" table="borrow_detail"  fetch="join" lazy="false">
+            <key column="car_id"></key>
+            <one-to-many class="org.gac.lzj.avnt.entities.BorrowDetailInfoEntity"></one-to-many>
+        </set>
     </class>
 </hibernate-mapping>

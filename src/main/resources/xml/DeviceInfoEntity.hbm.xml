@@ -41,5 +41,12 @@
         <property name="devicePhone">
             <column name="device_Phone" sql-type="varchar(32)" length="32" not-null="true"/>
         </property>
+        <property name="deviceRemarks">
+            <column name="device_Remarks" sql-type="varchar(255)" length="255" not-null="true"/>
+        </property>
+        <set name="borrowDetailInfoEntities" table="borrow_detail" inverse="true">
+            <key column="device_id"></key>
+            <one-to-many class="org.gac.lzj.avnt.entities.BorrowDetailInfoEntity"></one-to-many>
+        </set>
     </class>
 </hibernate-mapping>

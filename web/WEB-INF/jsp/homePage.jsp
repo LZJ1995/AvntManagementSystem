@@ -9,11 +9,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>AVNT管理系统</title>
+
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 	<link rel="shortcut icon" href="http://www.weather.com.cn/favicon.ico" type="image/x-icon" />
 	<script src="${pageContext.request.contextPath}/jquery/jquery-2.1.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/jquery/echarts.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
@@ -30,8 +32,8 @@
 									href="${pageContext.request.contextPath}/homePage.do"><i
 									class="glyphicon glyphicon-home"></i> 首页</a></li>
 							<li><a
-									href="${pageContext.request.contextPath}/showDeviceManagement.do"><i
-									class="glyphicon glyphicon-wrench"></i> 设备管理</a></li>
+									href="${pageContext.request.contextPath}/searchAll.do"><i
+									class="glyphicon glyphicon-wrench"></i> 资源管理</a></li>
 							<li ><a
 									href="${pageContext.request.contextPath}/showCarManagement.do"><i
 									class="glyphicon glyphicon-dashboard"></i> 车辆管理</a></li>
@@ -66,33 +68,71 @@
 						<div class="panel panel-default" style="height: 300px;width: 50%;float: left;text-align: center;background-color: inherit">
 						<div class="panel-heading">
 							<h3 class="panel-title">设备信息</h3>
+							<form class="form-inline" role="form" action="${pageContext.request.contextPath}/searchInfo.do">
+								<div class="form-group">
+									<select class="input-sm" id="searchType" name="searchType">
+										<option value="测试工具" selected="selected">测试工具</option>
+										<option value="实车">实车</option>
+										<option value="物料">物料</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input  type="text" class="form-control" id="searchContent" name="searchContent"
+											placeholder="请输入关键字">
+								</div>
+								<button id="search" type="submit" class="btn btn-default">搜索</button>
+							</form>
 						</div>
-					<div class="panel-body" >
+					<div class="panel-body"  style="height: 200px;overflow:auto;">
 						<table class="table table-hover">
 							<thead>
+							<c:if test="${empty deviceInfo.datas && empty casInfo.datas}">
 							<tr>
-								<td colspan="5"><select class="input-sm">
-									<option value="手机" selected="selected">手机</option>
-									<option value="U盘">U盘</option>
-									<option value="电将军">电将军</option>
-									<option value="Vspy">Vspy</option>
-									<option value="CONOE">CONOE</option>
-									<option value="拆车工具">拆车工具</option>
-								</select>
-									<input class="input-sm" type="text" style="width: 200px" placeholder="请输入关键字搜索">
-									<input type="button" class="btn btn-default" value="搜索"></td>
+								<td COLSPAN="4">暂无内容</td>
 							</tr>
+							</c:if>
+							<c:if test="${!empty deviceInfo.datas}">
 							<tr>
 								<td>设备名</td>
-								<td>库存</td>
-								<td>已借用</td>
-								<td>可借用</td>
+								<td>版本\内存大小</td>
+								<td>是否被借用</td>
 								<td>操作</td>
 							</tr>
+							</c:if>
+							<c:if test="${!empty casInfo.datas}">
+								<tr>
+									<td>车辆编号</td>
+									<td>车辆项目</td>
+									<td>责任人</td>
+									<td>操作</td>
+								</tr>
+							</c:if>
 							</thead>
-						<tbody>
-						<tr ><td colspan="5">暂未设备</td>
+							<tbody>
+						<c:if test="${!empty deviceInfo.datas}">
+							<c:forEach items="${deviceInfo.datas}" var="device">
+						<tr>
+							<td>${device.deviceName}</td>
+							<td>${device.deviceVersionFormat}</td>
+							<td>${device.deviceStatus}</td>
+							<td><div class="btn-group">
+								<button type="button" class="btn btn-default">查看详情</button>
+							</div></td>
 						</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${!empty casInfo.datas}">
+							<c:forEach items="${casInfo.datas}" var="car">
+								<tr>
+									<td>${car.carNumber}</td>
+									<td>${car.carProjectName}</td>
+									<td>${car.carDirector}</td>
+									<td><div class="btn-group">
+										<button type="button" class="btn btn-default">查看详情</button>
+									</div></td>
+								</tr>
+							</c:forEach>
+						</c:if>
 						</tbody>
 						</table>
 					</div>
@@ -110,25 +150,25 @@
 				<br/>
 				<div  style="height: 50%;width: 100%; background-color: #2b542c" >
 					<%--使用echarts 制作禅道数据报表--%>
-						<div class="panel panel-default" style="height: 300px;width: 50%;float: left;text-align: center " >
+						<div class="panel panel-default" style="height: 500px;width: 50%;float: left;text-align: center " >
 							<div class="panel-heading">
 									<h3 class="panel-title">禅道数据</h3>
 							</div>
 							<div class="panel-body">
-								<div id="chandaoDataShow" class="table-responsive" style="height: 300px;width: 100%;">
+								<div id="chandaoDataShow" class="table-responsive" style="height: 400px;width: 100%;">
 								</div>
 							</div>
 						</div>
 
 						<%--公告栏--%>
-					<div class="panel panel-default" style="height: 300px;width: 50%;float: right;text-align: center ">
+					<div class="panel panel-default" style="height: 500px;width: 50%;float: right;text-align: center ">
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								公告信息
 							</h3>
 						</div>
-						<div class="panel-body">
-							<table class="table table-hover">
+						<div class="panel-body" >
+							<table class="table table-hover" style="height: 40px" >
 								<thead>
 									<tr>
 										<td>序号</td>
@@ -152,6 +192,18 @@
 										<td>4</td>
 										<td>出去旅游不咯！</td>
 									</tr>
+									<tr>
+										<td>4</td>
+										<td>出去旅游不咯！</td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>出去旅游不咯！</td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>出去旅游不咯！</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -162,6 +214,15 @@
 	</div>
 </body>
 <script type="text/javascript">
+	$(function () {
+		$("#search").click(function () {
+			if($("#searchContent").val()==""){
+				alert("请输入搜索关键字！")
+				return false;
+			}
+		});
+	})
+
 	var myChart = echarts.init(document.getElementById("chandaoDataShow"));
 	var option = {
 		title:{
@@ -185,5 +246,7 @@
 		]
 	};
 	myChart.setOption(option);
+
+
 </script>
 </html>

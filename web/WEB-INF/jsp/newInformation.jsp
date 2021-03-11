@@ -7,12 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>AVNT管理系统</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://blog-static.cnblogs.com/files/china-li/jquery.form.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="shortcut icon" href="http://www.weather.com.cn/favicon.ico" type="image/x-icon" />
@@ -30,8 +33,8 @@
                                 href="${pageContext.request.contextPath}/homePage.do"><i
                                 class="glyphicon glyphicon-home"></i> 首页</a></li>
                         <li><a
-                                href="${pageContext.request.contextPath}/showDeviceManagement.do"><i
-                                class="glyphicon glyphicon-wrench"></i> 设备管理</a></li>
+                                href="${pageContext.request.contextPath}/searchAll.do"><i
+                                class="glyphicon glyphicon-wrench"></i> 资源管理</a></li>
                         <li ><a
                                 href="${pageContext.request.contextPath}/showCarManagement.do"><i
                                 class="glyphicon glyphicon-dashboard"></i> 车辆管理</a></li>
@@ -61,12 +64,8 @@
             </h3>
         </div>
         <div class="panel-body">
-
-
-
-
              <ul  class="nav nav-tabs">
-                 <li class="active"><a href="#device" data-toggle="tab">设备</a></li>
+                 <li class="active"><a href="#device" data-toggle="tab">资源</a></li>
                  <li><a href="#newStaff" data-toggle="tab">员工</a></li>
                  <li><a href="#newMateriel" data-toggle="tab">物料</a></li>
                  <li><a href="#newCar" data-toggle="tab">实车</a></li>
@@ -77,85 +76,92 @@
                 <div class="tab-pane fade in active" id="device" >
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title" style="text-align: center">新增设备</h3>
+                            <h3 class="panel-title" style="text-align: center">新增资源</h3>
                         </div>
-                        <div class="panel-body">
-                            <form class="form-horizontal" role="form">
+                            <div class="panel-body">
+                            <form:form id="deviceInfo" modelAttribute="devices" method="post" class="form-horizontal" role="form" action="${pageContext.request.contextPath}/addDeviceInfo">
                                 <div class="form-group" style="text-align: center">
-                                    <label for="device_Name" class="col-sm-2 control-label">设备品牌</label>
+                                    <label for="deviceName" class="col-sm-2 control-label">资源名称</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_Name"
-                                               placeholder="请输入设备品牌、华为、联想、金士顿等" style="width: 50%">
+                                        <form:input type="text" class="form-control" id="deviceName" path="deviceName"
+                                               placeholder="请输入设备品牌、华为、联想、金士顿等" style="width: 50%"/>
                                     </div>
                                 </div>
                                 <div class="form-group" style="text-align: center">
-                                    <label for="device_Type" class="col-sm-2 control-label">设备类型</label>
+                                    <label for="deviceType" class="col-sm-2 control-label">资源类型</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" id="device_Type" style="width: 30%">
+                                        <form:select class="form-control" onchange="typeSelect()" path="deviceType" id="deviceType" style="width: 30%">
                                             <option>手机</option>
                                             <option>U盘</option>
                                             <option>CAN工具</option>
                                             <option>拆车工具</option>
                                             <option>其他</option>
-                                        </select>
+                                        </form:select>
                                     </div>
                                 </div>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_Version_Format" class="col-sm-2 control-label">设备版本或者格式</label>
+                                <div id="version" class="form-group" style="text-align: center" >
+                                    <label for="deviceVersionFormat" class="col-sm-2 control-label">资源版本或者格式</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_Version_Format"
-                                               placeholder="请输入设备版本或格式：安卓9、U盘格式等" style="width: 50%">
+                                        <form:input type="text" class="form-control" id="deviceVersionFormat" path="deviceVersionFormat"
+                                               placeholder="请输入设备版本或格式：安卓9、U盘格式等" style="width: 50%"/>
                                     </div>
                                 </div>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_Memory" class="col-sm-2 control-label">内存大小</label>
+                                <div id="memory" class="form-group" style="text-align: center">
+                                    <label for="deviceMemory" class="col-sm-2 control-label">内存大小</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_Memory"
-                                               placeholder="请输入手机、U盘内存大小" style="width: 50%">
+                                        <form:input type="text" class="form-control" id="deviceMemory" path="deviceMemory"
+                                               placeholder="请输入手机、U盘内存大小" style="width: 50%"/>
                                     </div>
                                 </div>
                                 <%--手机相关信息--%>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_Model" class="col-sm-2 control-label">手机型号</label>
+                                <div id="model" class="form-group" style="text-align: center">
+                                    <label for="deviceModel" class="col-sm-2 control-label">手机型号</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_Model"
-                                               placeholder="请输入手机型号" style="width: 50%">
+                                        <form:input type="text" class="form-control" id="deviceModel" path="deviceModel"
+                                               placeholder="请输入手机型号" style="width: 50%"/>
+                                    </div>
+                                </div>
+                                <div id="mied" class="form-group" style="text-align: center">
+                                    <label for="deviceMeid" class="col-sm-2 control-label">手机MEID</label>
+                                    <div class="col-sm-10">
+                                        <form:input type="text" class="form-control" id="deviceMeid" path="deviceMeid"
+                                               placeholder="请输入手机MEID" style="width: 50%"/>
+                                    </div>
+                                </div>
+                                <div id="imei" class="form-group" style="text-align: center">
+                                    <label for="deviceImei" class="col-sm-2 control-label">手机IMEI</label>
+                                    <div class="col-sm-10">
+                                        <form:input type="text" class="form-control" id="deviceImei" path="deviceImei"
+                                               placeholder="请输入手机MEID" style="width: 50%"/>
+                                    </div>
+                                </div>
+                                <div id="account" class="form-group" style="text-align: center">
+                                    <label for="deviceAccountPassword" class="col-sm-2 control-label">手机账号密码</label>
+                                    <div class="col-sm-10">
+                                        <form:input type="text" class="form-control" id="deviceAccountPassword" path="deviceAccountPassword"
+                                               placeholder="请输入手机登录、解锁账号密码" style="width: 50%"/>
+                                    </div>
+                                </div>
+                                <div id="Phone" class="form-group" style="text-align: center">
+                                    <label for="devicePhone" class="col-sm-2 control-label">手机号码</label>
+                                    <div class="col-sm-10">
+                                        <form:input type="text" class="form-control" id="devicePhone" path="devicePhone"
+                                               placeholder="请输入当前手机号码" style="width: 50%"/>
                                     </div>
                                 </div>
                                 <div class="form-group" style="text-align: center">
-                                    <label for="device_MEID" class="col-sm-2 control-label">手机MEID</label>
+                                    <label for="devicePhone" class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_MEID"
-                                               placeholder="请输入手机MEID" style="width: 50%">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_IMEI" class="col-sm-2 control-label">手机IMEI</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_IMEI"
-                                               placeholder="请输入手机MEID" style="width: 50%">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_AccountPassword" class="col-sm-2 control-label">手机账号密码</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_AccountPassword"
-                                               placeholder="请输入手机登录、解锁账号密码" style="width: 50%">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="text-align: center">
-                                    <label for="device_Phone" class="col-sm-2 control-label">手机号码</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="device_Phone"
-                                               placeholder="请输入当前手机号码" style="width: 50%">
+                                        <form:input type="text" class="form-control" id="deviceRemarks" path="deviceRemarks"
+                                                    placeholder="请输入当前手机号码" style="width: 50%"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">提交信息</button>
+                                        <button type="submit" class="btn btn-default" id="submitDevice" >提交信息</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -225,26 +231,47 @@
                             <h3 class="panel-title" style="text-align: center">新增物料</h3>
                         </div>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/importMaterielInfo" method="POST" onsubmit=" return submitMateriel()" enctype="multipart/form-data">
                                 <div class="form-group" style="text-align: center">
-                                    <label for="materiel_project" class="col-sm-2 control-label">物料项目</label>
+                                    <label for="materielProject" class="col-sm-2 control-label">物料项目</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="materiel_project"
+                                        <input type="text" class="form-control" id="materielProject" name="materielProject"
                                                placeholder="请输入物料所属项目" style="width: 50%">
                                     </div>
                                 </div>
                                 <div class="form-group" style="text-align: center">
-                                    <label for="materiel_Name" class="col-sm-2 control-label">物料名称</label>
+                                    <label for="materielName" class="col-sm-2 control-label">物料名称</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="materiel_Name"
+                                        <input type="text" class="form-control" id="materielName" name="materielName"
                                                placeholder="请输入物料名称" style="width: 50%">
                                     </div>
                                 </div>
                                 <div class="form-group" style="text-align: center">
-                                    <label for="materiel_Total" class="col-sm-2 control-label">入库数量</label>
+                                    <label for="materielTotal" class="col-sm-2 control-label">入库数量</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="materiel_Total"
-                                               placeholder="请输入物料入库数量" style="width: 10%">
+                                        <input type="password" class="form-control" id="materielTotal" name="materielTotal"
+                                               placeholder="请输入物料入库数量" style="width: 20%">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <label for="materielPosition" class="col-sm-2 control-label">物料位置</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="materielPosition" name="materielPosition"
+                                               placeholder="请输入物料所在货架位置" style="width: 50%">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <label for="materielType" class="col-sm-2 control-label">物料分类</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="materielType" name="materielType"
+                                               placeholder="请输入物料分类、如仪表、屏幕、按键等！" style="width: 50%">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <label for="materielType" class="col-sm-2 control-label">导入数据</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="importMateriel" name="importMateriel"
+                                               placeholder="" style="width: 30%">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -385,4 +412,93 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    //页面加载完
+    $(function() {
+        $("#submitDevice").click(function () {
+            if ($("#deviceName").val() == "") {
+                alert("请填写资源名称")
+                return false;
+            } else if ($("#deviceType").val() == "手机") {
+                if ($("#deviceVersionFormat").val() == "") {
+                    alert("请填写手机安卓版本")
+                    return false;
+                } else if ($("#deviceMemory").val() == "") {
+                    alert("请填写手机内存大小")
+                    return false;
+                } else if ($("#deviceModel").val() == "") {
+                    alert("请填写手机型号")
+                    return false;
+                }
+            } else if ($("#deviceType").val() == "U盘") {
+                if ($("#deviceVersionFormat").val() == "") {
+                    alert("请填写U盘格式")
+                    return false;
+                } else if ($("#deviceMemory").val() == "") {
+                    alert("请填写U盘内存大小")
+                    return false;
+                } else if ($("#deviceMemory").val() != "" && !/^[0-9]*$/.test($("#deviceMemory").val())) {
+                    alert("请填内存大小数字类型")
+                    return false;
+                }
+            }
+        });
+        $("#deviceInfo").ajaxForm(function (data) {
+                alert(data);
+            window.location.replace("/welcome/showNewInformation.do");
+            }
+        );
+    })
+    function typeSelect() {
+        if($("#deviceType").val()=="手机"){
+            $("#version").css("display","block")
+            $("#memory").css("display","block")
+            $("#model").css("display","block")
+            $("#mied").css("display","block")
+            $("#imei").css("display","block")
+            $("#account").css("display","block")
+            $("#Phone").css("display","block")
+        }else if($("#deviceType").val()=="U盘"){
+            $("#version").css("display","block")
+            $("#memory").css("display","block")
+            $("#model").css("display","none")
+            $("#mied").css("display","none")
+            $("#imei").css("display","none")
+            $("#account").css("display","none")
+            $("#Phone").css("display","none")
+        }
+        else {
+            $("#version").css("display","none")
+            $("#memory").css("display","none")
+            $("#model").css("display","none")
+            $("#mied").css("display","none")
+            $("#imei").css("display","none")
+            $("#account").css("display","none")
+            $("#Phone").css("display","none")
+
+        }
+    }
+    function submitMateriel() {
+        if ($("#importMateriel").val()==""){
+            if ($("#materielName").val()==""){
+                    alert("请填写物料名！")
+                return false;
+            }else if ($("#materielProject").val()==""){
+                alert("请填写物料所属项目！")
+                return false;
+            }else if ($("#materielTotal").val()==""){
+                alert("请填写物料数量！")
+                return false;
+            }else if ($("#materielType").val()==""){
+                alert("请填写物料分类！")
+                return false;
+            }else if ($("#materielPosition").val()==""){
+                alert("请填写物料所在货架位置")
+                return false;
+            }
+        }else {
+            return true;
+        }
+    }
+</script>
 </html>

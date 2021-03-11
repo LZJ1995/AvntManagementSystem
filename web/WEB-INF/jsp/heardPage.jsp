@@ -10,15 +10,15 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-<%--                <c:if test="${empty sessionScope.staff}">--%>
-                    <li class="active"><a href="#">未登录</a></li>
-<%--               </c:if>--%>
-<%--                <c:if test="${!empty sessionScope.staff }">--%>
-                <li><a href="#">中科创达</a></li>
-                <li><a href="#">测试工程师</a></li>
+              <c:if test="${empty sessionScope.staff}">
+                    <li class="active"><a style="pointer-events: none;" href="#">未登录</a></li>
+             </c:if>
+               <c:if test="${!empty sessionScope.staff }">
+                <li><a style="pointer-events: none;"  href="#">${sessionScope.staff.staffCompany}</a></li>
+                <li><a style="pointer-events: none;" href="#">测试工程师</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span> 张三 <b class="caret"></b>
+                        <span class="glyphicon glyphicon-user"></span> ${sessionScope.staff.staffName} <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人资料</a></li>
@@ -27,7 +27,7 @@
                         <li><a href="#">退出登录</a></li>
                     </ul>
                 </li>
-<%--              </c:if>--%>
+           </c:if>
             </ul>
     </div>
 </nav>

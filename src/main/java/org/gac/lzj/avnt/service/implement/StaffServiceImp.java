@@ -12,11 +12,7 @@ public class StaffServiceImp implements StaffService {
     private StaffinfoDao staffinfoDao;
 
     public StaffInfoEntity loginService(String account, String password) {
-        StaffInfoEntity staffInfo=null;
-        if (!account.equals(" ")&&!password.equals(" ")){
-            staffInfo= staffinfoDao.getCheckLogin(account,password);
-        }
-        System.out.println("sercices"+staffInfo.toString());
+        StaffInfoEntity staffInfo= staffinfoDao.queryCheckLogin(account,password);
         return staffInfo;
     }
 }

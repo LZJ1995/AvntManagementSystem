@@ -13,15 +13,43 @@
     <mvc:resources mapping="/jquery/**" location="/jquery/"/>
     <!--自动扫描包-->
     <context:component-scan base-package="org.gac.lzj.avnt.controller"/>
-  <!-- <mvc:interceptors>
+ <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/jquery/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/imager/**"/>
             <bean class="org.gac.lzj.avnt.interceptor.SingleUserInterceptor"></bean>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+    </mvc:interceptors>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <!-- 解决@ResponseBody返回中文乱码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>*/*;charset=UTF-8</value>
+                    </list>
+                </property>
+                <!-- 用于避免响应头过大 -->
+                <property name="writeAcceptCharset" value="false" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2097152" />
+        <!-- resolveLazily属性启用是为了推迟文件解析，以便在Action 中捕获文件大小异常 -->
+        <property name="resolveLazily" value="true" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
     <!--使用视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+
 </beans>

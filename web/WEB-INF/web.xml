@@ -39,12 +39,21 @@
     </filter>
     <filter-mapping>
         <filter-name>CharacterEncoding</filter-name>
-        <url-pattern>/</url-pattern>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- 配置 HiddenHttpMethodFilter: 把 POST 请求转为 DELETE、PUT 请求  配置REST风格-->
     <!--<filter>
